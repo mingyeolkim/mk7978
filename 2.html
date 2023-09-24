@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>대구 미세먼지 정보</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+        /*input 요소다음에 위치한 p요소에 margin-left 속성을 combinator로 적용*/
+        input[type="text"] + button {
+            margin-left: 10px;
+        }
+        /*attribute selector, combinator 사용*/
+        input[type="text"] ~ p {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        /*버튼색*/
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        /* 모바일 환경 대응 스타일*/
+        @media (max-width: 900px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            input[type="text"], button {/*attribute selector 활용*/
+                font-size: 14px;
+            }
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script><!--jqurey 사용-->
+    <script>
+        $(document).ready(function() {// 미세먼지 조회 버튼 클릭시 getAirQuality 함수 호출(DOM 사용)
+            $("#search-button").click(function() {
+                getAirQuality();
+            });
+            // 미세먼지 정보를 가져오는 함수
+            function getAirQuality() {
+                //사용자 입력값 가져오기
+                var city = $("#city").val();
+                var apiKey = "0af1e9e3-0fc9-4e32-99c4-a4390d39610e";
+                //AJAX를 사용하여 API 에 GET 요청 보내기
+                $.get("https://api.airvisual.com/v2/city?city=" + city + "&state=Daegu&country=South%20Korea&key=" + apiKey)
+                    .done(function(data) {//요청이 성공했을때 실행되는 콜백 함수, Json 형식으로 반환
+                        var pollution = data.data.current.pollution;
+                        var aqi = pollution.aqius;// 대기질 지수 알려주는 변수
+                        var mainPollutant = pollution.mainus;// 주요 오염물질 알려주는 변수
+
+                        $("#result").html("현재 " + city + "의 대기질 지수(AQI): " + aqi + "<br>주요 오염물질: " + mainPollutant);
+                    })
+                    .fail(function() {//요청이 실패 했을때 실행되는 콜백 함수
+                        $("#result").html("데이터를 가져오는 중 오류가 발생했습니다.");
+                    });
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>대구 미세먼지 정보</h1>
+    <input type="text" id="city" placeholder="도시명을 입력하세요" pattern="[A-Za-z\s]+"> <!--입력 format 지정--> <!--input 사용-->
+    <button id="search-button">미세먼지 조회</button>
+    <p id="result"></p>
+    <table> <!--테이블 활용-->
+        <tr>
+        <td>0~50: 좋음</td>
+        </tr>
+        <tr>
+        <td>51~100: 보통</td>
+        </tr>
+        <tr>
+        <td>101~150: 민감군 주의</td>
+        </tr>
+        <tr>
+        <td>151~200: 나쁨</td>
+        </tr>
+        <tr>
+        <td>201~300: 매우 나쁨</td>
+        </tr>
+        <tr>
+        <td>301: 위험</td>
+        </tr>
+    </table>
+</body>
+</html>

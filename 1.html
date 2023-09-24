@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>대구 날씨 정보</title>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        
+        /* 어트리부트 샐랙터와 콤비네이터 */
+        input[type="text"] + button {
+            margin-top: 0;
+        }
+
+    
+        /* 어트리부트 샐랙터와 컴비네이터 */
+        h1 + input[type="text"] {
+            margin-top: 30px;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+        /*어트리부트 샐랙터*/
+        input[type="text"], button {
+            margin: 10px;
+            padding: 8px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        /* 모바일 환경 대응 스타일 */
+        @media (max-width: 900px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+            /*어트리부트 샐랙터*/
+            input[type="text"], button {
+                font-size: 14px;
+            }
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!--jqurey 사용-->
+    <script>
+        // 날씨 정보 가져오는 함수
+        function getWeather() {
+            // 사용자가 입력한 도시명 가져오기, dom 활용
+            var city = document.getElementById("city").value;
+            // API 키
+            var apiKey = "f88f7640328d479bbfe151651232805";
+
+            // API를 통해 날씨 정보 요청
+            $.get("https://api.weatherapi.com/v1/current.json?key=" + apiKey + "&q=" + city, function(data) {
+                // API 응답에서 온도와 날씨 정보 추출
+                var temperature = data.current.temp_c;
+                var weather = data.current.condition.text;
+
+                // 결과를 HTML 요소에 출력, dom 활용
+                document.getElementById("result").innerHTML = "현재 " + city + " 온도: " + temperature + "°C, 날씨: " + weather;
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>대구 날씨 정보</h1>
+    <input type="text" id="city" placeholder="도시명을 입력하세요"> <!--input 사용-->
+    <!--버튼 클릭시 함수 호출-->
+    <button onclick="getWeather()">현재 대구의 날씨</button>
+    <p id="result"></p>
+</body>
+</html>

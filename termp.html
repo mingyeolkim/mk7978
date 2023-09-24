@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* 모바일 환경 스타일 */
+        @media (max-width: 900px) {
+            body {
+                width: 100vw;
+                padding: 10px;
+            }
+            .container {
+                flex-direction: column; /*flex 활용*/
+                align-items: center;
+            }
+            .box {
+                flex: 0 0 auto; /*flex 활용*/
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+        header {
+            text-align: center;
+        }
+        /* 링크에 호버 시 색상 변경 */
+        a:hover {
+            color: red;
+        }
+        /* .box에 호버 시 글자 색상 변경 */
+        .box:hover {
+            color: blanchedalmond;
+        }
+        /* h1 요소 앞뒤에 -- 추가 */
+        h1::before {
+            content: "--";
+        }
+        h1::after {
+            content: "--";
+        }
+        /* type이 button인 버튼 스타일 */
+        button[type="button"] {
+            color: black;
+            background-color: greenyellow;
+        }
+        #fh1 {
+            color: darkorange;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap; /*flex 활용*/
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            min-height: 600px;
+        }
+        .box {
+            flex: 1 1 200px; /*flex 활용*/
+            background-color: #FFCD28;
+            border: 1px solid #fff;
+            padding: 50px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            float: left; /*float 활용*/
+            clear: both; /*clear 활용*/
+        }
+        #footer {
+            text-align: center;
+            font-style: bold;
+        }
+        /* header의 nav 요소의 자식 a 요소 사이에 오른쪽 마진 추가 */
+        header nav > a {
+            margin-right: 10px;
+        }
+        /* .box에 호버 시 뒤이어 나오는 형제 .box 요소의 투명도 변경 */
+        .box:hover ~ .box {
+            opacity: 0.7;
+        }
+        #navid{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 10vh;
+        }
+    </style>
+    <title>대구광역시 날씨 및 대중교통</title>
+</head>
+<body>
+    <header>
+        <!-- Semantic Header -->
+        <h1 id="fh1">대구광역시의 날씨 및 대중교통 정보</h1>
+        <!--navigation 사용-->
+        <nav id="navid">
+            <!--테이블 사용하고 북마크 설정-->
+            <table>
+                <tr>
+                    <td><a href="#weather">Weather</a></td>
+                    <td><a href="#dust">Dust</a></td>
+                    <td><a href="#bus">Bus</a></td>
+                </tr>
+            </table>
+        </nav>    
+    </header>
+    <hr>
+    <article class="container">
+        <section class="box" id="weather" style="text-align: center;">
+            <h2>날씨</h2>
+            <!--이벤트 속성 버튼으로 클릭시 해당 html 페이지로 넘어감-->
+            <button id="weatherbutton" type="button" onClick="location.href='1.html'">보기</button>
+        </section>
+        <section class="box" id="dust" style="text-align: center;">
+            <h2>미세먼지</h2>
+            <button id="dustbutton" type="button" onclick="location.href='2.html'">보기</button>
+        </section>
+        <section class="box" id="bus" style="text-align: center;">
+            <h2>대중교통</h2>
+            <button id="busbutton" type="button" onClick="location.href='3.html'">보기</button>
+        </section>
+    </article>
+    <!-- Semantic Footer -->
+    <footer id="footer">
+        <ul>
+            <li>201924423_김민결</li>
+        </ul>
+    </footer>
+</body>
+</html>
